@@ -26,9 +26,6 @@ class Player {
 
     player._process = await Process.start('mpg123', ['-R']);
 
-    // player._process.stdin.write('L /mnt/c/Users/Alan/Desktop/a.mp3\n');
-    // await player._process.stdin.flush();
-
     return player;
   }
 
@@ -42,6 +39,8 @@ class Player {
     }
     return true;
   }
+
+  
 
   // 方法
   // 播放 
