@@ -10,6 +10,7 @@ class Player {
   Config _config;
   Downloader _downloader;
   Notifier _notifier;
+  Mpg123Controller _controller;
 
   /// forbid new intance
   Player() {
@@ -25,6 +26,8 @@ class Player {
     if (!player._checkEnv()) throw EnvInvalidException('Error: not found mpg123');
 
     player._process = await Process.start('mpg123', ['-R']);
+    player._process.stdin.write('L http://m8.music.126.net/20200512000456/c1e73c4a593396221ef4d6dc3c0e3cea/ymusic/8972/6e6e/7b86/bddf788bf92e62d7c5c9aa457dd27bf5.mp3\n');
+    await player._process.stdin.flush();
 
     return player;
   }
