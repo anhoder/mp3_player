@@ -7,7 +7,7 @@ class Player {
   OsType _os;
   IInput _input;
 
-  SongList _playlist;
+  List<Song> _playlist;
   PlayMode _playMode;
   Song _curSong;
   Config _config;
@@ -28,13 +28,13 @@ class Player {
     if (!player._checkEnv()) throw EnvInvalidException('Error: not found mpg123');
     player._checkOsType();
 
+    player._playlist = [];
+
     if (player._os == OsType.Windows) {
       player._process = await Process.start('mpg123', ['-R --fifo ${WinInput.PIPE_NAME}']);
     } else {
       player._process = await Process.start('mpg123', ['-R']);
     }
-    // player._process.stdin.write('L http://m8.music.126.net/20200512000456/c1e73c4a593396221ef4d6dc3c0e3cea/ymusic/8972/6e6e/7b86/bddf788bf92e62d7c5c9aa457dd27bf5.mp3\n');
-    // await player._process.stdin.flush();
 
     return player;
   }
@@ -50,6 +50,7 @@ class Player {
     return true;
   }
 
+  /// check system
   void _checkOsType() {
     if (Platform.isWindows) {
       _os = OsType.Windows;
@@ -66,9 +67,11 @@ class Player {
     }
   }
 
-  
+  Player play(dynamic songs) {
+    // if (songs is String) _playlist.add(Song());
+  }
 
-  // 方法
+  ///////// 方法
   // 播放 
   // 暂停
   // 继续
