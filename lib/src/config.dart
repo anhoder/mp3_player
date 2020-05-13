@@ -143,8 +143,6 @@ const Map<String, ConfigType> _acceptedConfigs = {
   '--smooth': ConfigType.OK_FLAG,
 
   '--title': ConfigType.OK_FLAG,
-
-  '--fifo': ConfigType.OK_OPTION,
 };
 
 

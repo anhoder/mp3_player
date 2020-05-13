@@ -1,0 +1,14 @@
+part of mpg123_player;
+
+class OtherInput implements IInput {
+  final IOSink _stdin;
+
+  OtherInput(this._stdin);
+
+  @override
+  OtherInput _write(String input) {
+    _stdin.write(input);
+    return this;
+  }
+
+}

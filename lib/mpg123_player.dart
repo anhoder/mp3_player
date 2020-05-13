@@ -10,5 +10,7 @@ part 'src/notifier.dart';
 part 'src/play_mode.dart';
 part 'src/song.dart';
 part 'src/config.dart';
-part 'src/mpg123_controller.dart';
-
+part 'src/interface/i_input.dart';
+part 'src/win_input.dart';
+part 'src/other_input.dart';
+part 'src/os_type.dart';
