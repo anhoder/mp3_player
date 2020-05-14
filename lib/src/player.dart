@@ -1,6 +1,6 @@
 part of mpg123_player;
 
-class Player {
+class Player extends IPlayer {
   /// mpg123 process
   Process _process;
 
@@ -20,24 +20,23 @@ class Player {
   }
 
   /// private method to new a instance
-  Player._newInstance();
-
-  /// start the player
-  static Future<Player> start() async {
-    var player = Player._newInstance();
-    if (!player._checkEnv()) throw EnvInvalidException('Error: not found mpg123');
-    player._checkOsType();
-
-    player._playlist = [];
-
-    if (player._os == OsType.Windows) {
-      player._process = await Process.start('mpg123', ['-R --fifo ${WinInput.PIPE_NAME}']);
-    } else {
-      player._process = await Process.start('mpg123', ['-R']);
-    }
-
-    return player;
+  Player._newInstance() {
+    if (!_checkEnv()) throw EnvInvalidException('Error: not found mpg123');
+    _checkOsType();
+    _playlist = [];
   }
+
+  /// start 
+  @override
+  void _start() async {
+    if (_os == OsType.Windows) {
+      _process = await Process.start('mpg123', ['-R --fifo ${WinInput.PIPE_NAME}']);
+    } else {
+      _process = await Process.start('mpg123', ['-R']);
+    }
+  }
+
+
 
   /// check runtime environment
   bool _checkEnv() {
@@ -67,9 +66,25 @@ class Player {
     }
   }
 
-  Player play(dynamic songs) {
+  @override
+  Player _play(Song songs) {
     // if (songs is String) _playlist.add(Song());
   }
+
+  @override
+  _pause() {
+    // TODO: implement _pause
+    return null;
+  }
+
+  @override
+  _resume() {
+    // TODO: implement _resume
+    return null;
+  }
+
+  @override
+  IPlayer _newInstance() => Player._newInstance();
 
   ///////// 方法
   // 播放 
