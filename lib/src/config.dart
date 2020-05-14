@@ -1,4 +1,4 @@
-part of mpg123_player;
+part of audio_player;
 
 enum ConfigType {
   OK_FLAG,
@@ -148,6 +148,10 @@ const Map<String, ConfigType> _acceptedConfigs = {
 
 class Config {
   Map<String, String> _configs;
+
+  Config([this._configs]) {
+    _configs ??= {};
+  }
 
   Config addAcceptedConfig(String key, ConfigType type) {
     if (_acceptedConfigs.containsKey(key)) throw KeyExistsException(key);

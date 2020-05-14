@@ -1,18 +1,13 @@
-part of mpg123_player;
+part of audio_player;
 
-class Player extends IPlayer {
-  /// mpg123 process
-  Process _process;
+class Player {
 
-  OsType _os;
-  IInput _input;
-
-  List<Song> _playlist;
+  Queue<Song> _playlist;
   PlayMode _playMode;
   Song _curSong;
-  Config _config;
   Downloader _downloader;
   Notifier _notifier;
+  IProcessPlayer _player;
 
   /// forbid new intance
   Player() {
@@ -20,71 +15,31 @@ class Player extends IPlayer {
   }
 
   /// private method to new a instance
-  Player._newInstance() {
-    if (!_checkEnv()) throw EnvInvalidException('Error: not found mpg123');
-    _checkOsType();
-    _playlist = [];
+  Player._newInstance(): _playlist = Queue();
+  
+  
+  static Future<Player> run([IProcessPlayer processPlayer]) async {
+    var player = Player._newInstance();
+    player._player = processPlayer ?? Mpg123Player();
+    await player._player._run();
+    return player;
   }
 
-  /// start 
-  @override
-  void _start() async {
-    if (_os == OsType.Windows) {
-      _process = await Process.start('mpg123', ['-R --fifo ${WinInput.PIPE_NAME}']);
+
+  Player play(dynamic songs) {
+    if (songs is String) {
+      _playlist.addLast(Song(songs));
+    } else if (songs is Song) {
+      _playlist.addLast(songs);
+    } else if (songs is List<Song>) {
+      _playlist.addAll(songs);
     } else {
-      _process = await Process.start('mpg123', ['-R']);
+      throw DataTypeInvalidException(songs.toString());
     }
+
+    if (_playlist.isNotEmpty) _player._play(_playlist.removeFirst());
+    return this;
   }
-
-
-
-  /// check runtime environment
-  bool _checkEnv() {
-    try {
-      var result = Process.runSync('mpg123', ['--version']);
-      if (result.exitCode != 0) return false;
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
-
-  /// check system
-  void _checkOsType() {
-    if (Platform.isWindows) {
-      _os = OsType.Windows;
-      _input = WinInput();
-    } else if (Platform.isLinux) {
-      _os = OsType.Linux;
-      _input = OtherInput(_process.stdin);
-    } else if (Platform.isMacOS) {
-      _os = OsType.MacOS;
-      _input = OtherInput(_process.stdin);
-    } else {
-      _os = OsType.Other;
-      _input = OtherInput(_process.stdin);
-    }
-  }
-
-  @override
-  Player _play(Song songs) {
-    // if (songs is String) _playlist.add(Song());
-  }
-
-  @override
-  _pause() {
-    // TODO: implement _pause
-    return null;
-  }
-
-  @override
-  _resume() {
-    // TODO: implement _resume
-    return null;
-  }
-
-  @override
-  IPlayer _newInstance() => Player._newInstance();
 
   ///////// 方法
   // 播放 

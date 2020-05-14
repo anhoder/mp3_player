@@ -1,7 +1,7 @@
-part of mpg123_player;
+part of audio_player;
 
 class WinInput implements IInput {
-  static const String PIPE_NAME = '\\\\.\\pipe\\mpg123_player_pipe';
+  static const String PIPE_NAME = r'\\.\pipe\pipename';
   final File _pipe;
 
   WinInput(): _pipe = File(PIPE_NAME);

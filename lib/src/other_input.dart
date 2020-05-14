@@ -1,4 +1,4 @@
-part of mpg123_player;
+part of audio_player;
 
 class OtherInput implements IInput {
   final IOSink _stdin;

@@ -1,4 +1,4 @@
-part of mpg123_player;
+part of audio_player;
 
 class Song {
   String name;
@@ -7,16 +7,5 @@ class Song {
   int duration;
   String source;
 
-  Song(String source, {this.name, this.singer, this.album, this.duration}) {
-    var uri = Uri.tryParse(source);
-    if (uri != null) {
-      if (uri.scheme == 'http') {
-        this.source = source;
-      } else if (uri.scheme == 'https') {
-        
-      } else {
-
-      }
-    }
-  }
+  Song(this.source, {this.name, this.singer, this.album, this.duration});
 }
