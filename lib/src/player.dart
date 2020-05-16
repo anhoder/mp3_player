@@ -2,9 +2,9 @@ part of audio_player;
 
 class Player {
 
-  Queue<Song> _playlist;
+  List<ISong> _playlist;
   PlayMode _playMode;
-  Song _curSong;
+  ISong _curSong;
   Downloader _downloader;
   Notifier _notifier;
   IProcessPlayer _player;
@@ -15,7 +15,7 @@ class Player {
   }
 
   /// private method to new a instance
-  Player._newInstance(): _playlist = Queue();
+  Player._newInstance(): _playlist = [];
   
   
   static Future<Player> run([IProcessPlayer processPlayer]) async {
@@ -26,18 +26,24 @@ class Player {
   }
 
 
-  Player play(dynamic songs) {
-    if (songs is String) {
-      _playlist.addLast(Song(songs));
-    } else if (songs is Song) {
-      _playlist.addLast(songs);
-    } else if (songs is List<Song>) {
-      _playlist.addAll(songs);
-    } else {
-      throw DataTypeInvalidException(songs.toString());
+  Player play([dynamic songs]) {
+    if (songs != null) {
+      if (songs is String) {
+        _playlist.add(Song.fromString(songs));
+      } else if (songs is ISong) {
+        _playlist.add(songs);
+      } else if (songs is List<ISong>) {
+        _playlist.addAll(songs);
+      } else if (songs is List<String>) {
+        songs.forEach((song) => _playlist.add(Song.fromString(song)));
+      } else {
+        throw DataTypeInvalidException(songs.toString());
+      }
     }
+  
+    _player._play(_playlist.first);
+    
 
-    if (_playlist.isNotEmpty) _player._play(_playlist.removeFirst());
     return this;
   }
 

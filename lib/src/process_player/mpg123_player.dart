@@ -5,8 +5,10 @@ class Mpg123Player implements IProcessPlayer {
   OsType _os;
   IInput _input;
   Config _config;
+  int _volume;
+  bool _isPlaying;
 
-  Mpg123Player([this._config]) {
+  Mpg123Player([this._config]): _isPlaying = false {
     if (!_checkEnv()) throw EnvInvalidException('Error: not found mpg123');
     _config ??= Config();
   }
@@ -41,18 +43,49 @@ class Mpg123Player implements IProcessPlayer {
 
   @override
   Future _run() async {
-    if (_os == OsType.Windows) {
-      _process = await Process.start('mpg123', ['--fifo ${WinInput.PIPE_NAME} -R']);
+    if (Platform.isWindows) {
+      _process = await Process.start('mpg123', ['--fifo', WinInput.PIPE_NAME, '-R']);
     } else {
       _process = await Process.start('mpg123', ['-R']);
     }
     _checkOsType();
+    _process.stdout.pipe(Mpg123Monitor(this));
   }
 
   @override
-  Mpg123Player _play(Song song) {
+  Future<Mpg123Player> _play(ISong song) async {
     _input._write('L ${song.source}\n');
     return this;
+  }
+
+  @override
+  Mpg123Player _stop() {
+    _input._write('S\n');
+    return this;
+  }
+
+  @override
+  Mpg123Player _upVolume(int delta) => _tuneVolume(delta, true);
+
+  @override
+  Mpg123Player _downVolume(int delta) => _tuneVolume(delta, false);
+
+  Mpg123Player _tuneVolume(int delta, [bool isUp = true]) {
+    _volume = isUp ? _volume + delta : _volume - delta;
+    if (_volume > 100) {
+      _volume = 100;
+    } else if (_volume < 0) {
+      _volume = 0;
+    }
+
+    _input._write('V ${_volume}\n');
+
+    return this;
+  }
+
+
+  _getProgress() {
+    // TODO
   }
 
   @override
@@ -65,6 +98,12 @@ class Mpg123Player implements IProcessPlayer {
   _resume() {
     // TODO: implement _resume
     return null;
+  }
+
+  @override
+  _quit() {
+    _input._write('Q\n');
+    _process.kill();
   }
 
 }

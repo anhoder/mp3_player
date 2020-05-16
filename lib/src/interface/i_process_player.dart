@@ -8,5 +8,13 @@ abstract class IProcessPlayer {
 
   dynamic _resume();
 
-  dynamic _play(Song song);
+  dynamic _play(ISong song);
+
+  dynamic _stop();
+
+  dynamic _quit();
+
+  dynamic _upVolume(int delta);
+
+  dynamic _downVolume(int delta);
 }
