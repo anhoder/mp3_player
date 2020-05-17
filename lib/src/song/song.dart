@@ -20,6 +20,8 @@ class Song implements ISong {
     var uri = Uri.parse(song);
     if (uri.isScheme('http')) {
       return Song(song, SongType.NETWORK);
+    } else if (uri.isScheme('https')) {
+      throw DataTypeInvalidException('Do not support https');
     }
 
     var file = File(song);
