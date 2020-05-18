@@ -3,10 +3,7 @@ part of audio_player;
 class Player {
 
   List<ISong> _playlist;
-  PlayMode _playMode;
-  ISong _curSong;
-  Downloader _downloader;
-  Notifier _notifier;
+  int _curSongIdx;
   IProcessPlayer _player;
 
   /// forbid new intance
@@ -15,7 +12,7 @@ class Player {
   }
 
   /// private method to new a instance
-  Player._newInstance(): _playlist = [];
+  Player._newInstance(): _playlist = [], _curSongIdx = 0;
   
   
   static Future<Player> run([IProcessPlayer processPlayer]) async {
@@ -25,8 +22,13 @@ class Player {
     return player;
   }
 
-
   Player play([dynamic songs]) {
+    addSong(songs);
+    _player._play(_playlist.first);
+    return this;
+  }
+
+  Player addSong(dynamic songs) {
     if (songs != null) {
       if (songs is String) {
         _playlist.add(Song.fromString(songs));
@@ -40,26 +42,71 @@ class Player {
         throw DataTypeInvalidException(songs.toString());
       }
     }
-  
-    _player._play(_playlist.first);
-    
-
     return this;
   }
 
-  ///////// 方法
-  // 播放 
-  // 暂停
-  // 继续
-  // 切歌
-  // 下一曲
-  // 上一曲
-  // 前进
-  // 后退
-  // 修改播放方式
-  // 显示歌曲信息
-  // 下载音歌曲
-  // 歌词显示
-  // 调节音量
+  Player pause() {
+    _player._pause();
+    return this;
+  }
 
+  Player resume() {
+    _player._resume();
+    return this;
+  }
+
+  Player next() {
+    _player._stop();
+    if (_curSongIdx >= _playlist.length - 1) {
+      _curSongIdx = 0;
+    } else {
+      _curSongIdx++;
+    }
+    _player._play(_playlist[_curSongIdx]);
+    return this;
+  }
+
+  Player pre() {
+    _player._stop();
+    if (_curSongIdx <= 0) {
+      _curSongIdx = _playlist.length - 1;
+    } else {
+      _curSongIdx--;
+    }
+    _player._play(_playlist[_curSongIdx]);
+    return this;
+  }
+
+  Player forward({int seconds = 5, int frame}) {
+    if (seconds != null) {
+      _player._jump(seconds: seconds, offset: true);
+    } else if (frame != null) {
+      _player._jump(frame: frame, offset: true);
+    }
+    return this;
+  }
+
+  Player back({int seconds = 5, int frame}) {
+    if (seconds != null) {
+      _player._jump(seconds: -seconds, offset: true);
+    } else if (frame != null) {
+      _player._jump(frame: -frame, offset: true);
+    }
+    return this;
+  }
+
+  Player upVolumne([int delta = 10]) {
+    _player._upVolume(delta);
+    return this;
+  }
+
+  Player downVolume([int delta = 10]) {
+    _player._downVolume(delta);
+    return this;
+  }
+
+  void quit() {
+    _player._quit();
+    exit(0);
+  }
 }

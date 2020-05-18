@@ -7,8 +7,7 @@ class OtherInput implements IInput {
 
   @override
   OtherInput _write(String input) {
-    _stdin..write(input)
-          ..flush();
+    _stdin.write(input);
     return this;
   }
 

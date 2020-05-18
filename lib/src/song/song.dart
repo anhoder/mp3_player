@@ -6,10 +6,15 @@ enum SongType {
 }
 
 class Song implements ISong {
+  @override
   String name;
+  @override
   String singer;
+  @override
   String album;
+  @override
   int duration;
+  @override
   String source;
   SongType type;
 

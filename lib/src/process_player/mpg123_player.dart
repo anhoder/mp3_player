@@ -6,12 +6,12 @@ class Mpg123Player implements IProcessPlayer {
   IInput _input;
   Config _config;
   int _volume;
-  bool _isPlaying;
   Mpg123Monitor<List<int>> _monitor;
 
-  Mpg123Player([this._config]): _isPlaying = false {
+  Mpg123Player([this._config]) {
     if (!_checkEnv()) throw EnvInvalidException('Error: not found mpg123');
     _config ??= Config();
+    _volume = _config.getConfigValue('volume') == null ? 100 : int.parse(_config.getConfigValue('volume'));
     _monitor = Mpg123Monitor<List<int>>();
   }
 

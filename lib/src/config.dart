@@ -165,7 +165,7 @@ class Config {
   }
 
   String getConfigValue(String key) {
-    if (!_configs.containsKey(key)) throw KeyNotExistsException(key);
+    if (!_configs.containsKey(key)) return null;
     return _configs[key];
   }
 

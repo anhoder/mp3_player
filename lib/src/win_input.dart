@@ -6,8 +6,9 @@ class WinInput implements IInput {
 
   @override
   WinInput _write(String input) {
+    print(_pipe);
     _pipe ??= File(PIPE_NAME);
-    _pipe.writeAsStringSync(input, flush: true);
+    _pipe.writeAsStringSync(input);
     return this;
   } 
 
