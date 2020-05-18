@@ -18,15 +18,15 @@ abstract class IProcessPlayer {
 
   dynamic _quit();
 
-  dynamic _tuneSpeed(int speed);
+  dynamic _tuneSpeed(int speed, [bool offset = false]);
 
   dynamic _upVolume(int delta);
 
   dynamic _downVolume(int delta);
 
-  Stream<Map<String, String>> _getMusicInfo();  // TODO T
+  Stream<Map<String, String>> _getMusicInfo();
 
-  Stream<Map<String, double>> _getProgress();   // TODO SAMPLE
+  Stream<Map<String, double>> _getProgress();
 
   Stream<int> _getStatus();
 

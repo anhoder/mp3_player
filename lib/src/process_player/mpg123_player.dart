@@ -61,6 +61,34 @@ class Mpg123Player implements IProcessPlayer {
   }
 
   @override
+  Mpg123Player _load(ISong song) {
+    _input._write('LP ${song.source}\n');
+    return this;
+  }
+
+  @override
+  Mpg123Player _jump({int seconds, int frame, bool offset = false}) {
+    if (seconds == null && frame == null) return this;
+    var input = 'J ';
+    if (offset) {
+      if (seconds != null) {
+        input = input + (seconds >= 0 ? '+' : '') + seconds.toString() + 's';
+      } else if (frame != null) {
+        input = input + (frame >= 0 ? '+' : '') + frame.toString();
+      }
+    } else {
+      if (seconds != null && seconds >= 0) {
+        input = input + seconds.toString() + 's';
+      } else if (frame != null && frame >= 0) {
+        input = input + frame.toString();
+      }
+    }
+    input = input + '\n';
+    _input._write(input);
+    return this;
+  }
+
+  @override
   Mpg123Player _stop() {
     _input._write('S\n');
     return this;
@@ -87,6 +115,20 @@ class Mpg123Player implements IProcessPlayer {
 
 
   @override
+  Mpg123Player _tuneSpeed(int speed, [bool offset = false]) {
+    var input = 'PITCH ';
+    if (offset) {
+      input = input + (speed >= 0 ? '+' : '') + speed.toString();
+    } else if (speed >= 0) {
+      input = input + speed.toString();
+    }
+    input = input + '\n';
+    _input._write(input);
+    return this;
+  }
+
+
+  @override
   Stream<Map<String, String>> _getMusicInfo() => _monitor._getMusicInfo();
 
   @override
@@ -105,19 +147,15 @@ class Mpg123Player implements IProcessPlayer {
   }
 
   @override
-  _resume() {
-    // TODO: implement _resume
-    return null;
-  }
-
-  _loadFile() {
-
+  Mpg123Player _resume() {
+    _input._write('P\n');
+    return this;
   }
 
   @override
-  _quit() {
+  void _quit() {
     _input._write('Q\n');
     _process.kill();
   }
 
-}
+} 
