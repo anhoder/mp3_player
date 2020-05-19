@@ -1,4 +1,4 @@
-part of mpg123_player;
+part of audio_player;
 
 enum OsType {
   Windows,

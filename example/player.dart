@@ -1,12 +1,50 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:mpg123_player/mpg123_player.dart';
+import 'package:audio_player/audio_player.dart';
 
-void main(List<String> args) {
-  Player.start().then((player) {
-    print(player);
+void main(List<String> args) async {
+  stdin.echoMode = false;
+  stdin.lineMode = false;
+
+
+  var player = await Player.run();
+  var song = [
+    'example/sample_mp3/a.mp3',
+    'example/sample_mp3/b.mp3',
+    'example/sample_mp3/c.mp3'
+  ];
+  player.play(song);
+
+
+  var playing = true;
+  stdin.transform(Utf8Decoder()).listen((inputKey) {
+    switch (inputKey) {
+      case ' ':
+        playing ? player.pause() : player.resume();
+        playing = !playing;
+        break;
+      case '[':
+        player.pre();
+        break;
+      case ']':
+        player.next();
+        break;
+      case ',':
+        player.back();
+        break;
+      case '.':
+        player.forward();
+        break;
+      case '-':
+        player.downVolume();
+        break;
+      case '=':
+        player.upVolumne();
+        break;
+      case 'q':
+        player.quit();
+        break;
+    }
   });
-  var file = File('\\\\.\\pipe\\pipename');
-  file.writeAsStringSync('L C:/Users/Alan/Desktop/a.mp3\n', flush: true);
-  
 }
