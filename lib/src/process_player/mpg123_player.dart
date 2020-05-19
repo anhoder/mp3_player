@@ -56,7 +56,7 @@ class Mpg123Player implements IProcessPlayer {
 
   @override
   Future<Mpg123Player> _play(ISong song) async {
-    _input._write('L ${song.source}\n');
+    _input._write('S\nL ${song.source}\n');
     return this;
   }
 
@@ -102,9 +102,9 @@ class Mpg123Player implements IProcessPlayer {
 
   Mpg123Player _tuneVolume(int delta, [bool isUp = true]) {
     _volume = isUp ? _volume + delta : _volume - delta;
-    if (_volume > 100) {
+    if (_volume >= 100) {
       _volume = 100;
-    } else if (_volume < 0) {
+    } else if (_volume <= 0) {
       _volume = 0;
     }
 

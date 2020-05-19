@@ -56,7 +56,6 @@ class Player {
   }
 
   Player next() {
-    _player._stop();
     if (_curSongIdx >= _playlist.length - 1) {
       _curSongIdx = 0;
     } else {
@@ -67,7 +66,6 @@ class Player {
   }
 
   Player pre() {
-    _player._stop();
     if (_curSongIdx <= 0) {
       _curSongIdx = _playlist.length - 1;
     } else {
