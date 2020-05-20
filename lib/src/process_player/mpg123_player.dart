@@ -11,7 +11,9 @@ class Mpg123Player implements IProcessPlayer {
   Mpg123Player([this._config]) {
     if (!_checkEnv()) throw EnvInvalidException('Error: not found mpg123');
     _config ??= Config();
-    _volume = _config.getConfigValue('volume') == null ? 100 : int.parse(_config.getConfigValue('volume'));
+    _volume = _config.getConfigValue('volume') == null
+        ? 100
+        : int.parse(_config.getConfigValue('volume'));
     _monitor = Mpg123Monitor<List<int>>();
   }
 
@@ -46,7 +48,8 @@ class Mpg123Player implements IProcessPlayer {
   @override
   Future _run() async {
     if (Platform.isWindows) {
-      _process = await Process.start('mpg123', ['--fifo', WinInput.PIPE_NAME, '-R']);
+      _process =
+          await Process.start('mpg123', ['--fifo', WinInput.PIPE_NAME, '-R']);
     } else {
       _process = await Process.start('mpg123', ['-R']);
     }
@@ -113,7 +116,6 @@ class Mpg123Player implements IProcessPlayer {
     return this;
   }
 
-
   @override
   Mpg123Player _tuneSpeed(int speed, [bool offset = false]) {
     var input = 'PITCH ';
@@ -126,7 +128,6 @@ class Mpg123Player implements IProcessPlayer {
     _input._write(input);
     return this;
   }
-
 
   @override
   Stream<Map<String, String>> _getMusicInfo() => _monitor._getMusicInfo();
@@ -157,5 +158,4 @@ class Mpg123Player implements IProcessPlayer {
     _input._write('Q\n');
     _process.kill();
   }
-
-} 
+}

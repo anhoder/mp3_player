@@ -6,7 +6,7 @@ class Mpg123Monitor<T> implements StreamConsumer<T> {
   final StreamController<Map<String, String>> _infoController;
   final StreamController<String> _errorController;
   final StreamController<int> _statusController;
-  
+
   String _title;
   String _artist;
   String _album;
@@ -15,17 +15,18 @@ class Mpg123Monitor<T> implements StreamConsumer<T> {
   String _genre;
   String _track;
 
-  Mpg123Monitor(): _progressController = StreamController(), 
-                   _infoController = StreamController(),
-                   _errorController = StreamController(),
-                   _statusController = StreamController();
+  Mpg123Monitor()
+      : _progressController = StreamController(),
+        _infoController = StreamController(),
+        _errorController = StreamController(),
+        _statusController = StreamController();
 
   void _handle(String data) {
     if (data.length < 2) return;
     var type = data.substring(0, 2);
     switch (type) {
       // music info
-      case '@I': 
+      case '@I':
         if (data.length < 7) break;
         var substr = data.substring(3, 7);
         switch (substr) {
@@ -36,7 +37,7 @@ class Mpg123Monitor<T> implements StreamConsumer<T> {
             _album = info.length >= 90 ? info.substring(60, 90) : '';
             _year = info.length >= 94 ? info.substring(90, 94) : '';
             _comment = info.length >= 124 ? info.substring(94, 124) : '';
-            _genre = info.length > 124 ? info.substring(124) : '' ;
+            _genre = info.length > 124 ? info.substring(124) : '';
             break;
           case 'ID3.':
           case 'ID3v':
@@ -68,7 +69,7 @@ class Mpg123Monitor<T> implements StreamConsumer<T> {
       case '@F':
         var items = data.split(' ');
         _progressController.add(<String, double>{
-          'cur': double.parse(items[3]), 
+          'cur': double.parse(items[3]),
           'left': double.parse(items[4])
         });
         break;
@@ -93,13 +94,12 @@ class Mpg123Monitor<T> implements StreamConsumer<T> {
   @override
   Future addStream(Stream stream) {
     var completer = Completer();
-    stream.transform(Utf8Decoder())
-          .transform(LineSplitter())
-          .listen((data) {
+    stream.transform(Utf8Decoder()).transform(LineSplitter()).listen((data) {
       _handle(data);
-    }, onError: completer.completeError,
-       onDone: completer.complete,
-       cancelOnError: true);
+    },
+        onError: completer.completeError,
+        onDone: completer.complete,
+        cancelOnError: true);
     return completer.future;
   }
 

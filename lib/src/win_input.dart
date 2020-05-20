@@ -14,6 +14,5 @@ class WinInput implements IInput {
       sleep(Duration(milliseconds: 200));
       return _write(input);
     }
-  } 
-
+  }
 }
