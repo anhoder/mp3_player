@@ -1,7 +1,6 @@
 part of audio_player;
 
 class Player {
-
   List<ISong> _playlist;
   int _curSongIdx;
   IProcessPlayer _player;
@@ -12,9 +11,10 @@ class Player {
   }
 
   /// private method to new a instance
-  Player._newInstance(): _playlist = [], _curSongIdx = 0;
-  
-  
+  Player._newInstance()
+      : _playlist = [],
+        _curSongIdx = 0;
+
   static Future<Player> run([IProcessPlayer processPlayer]) async {
     var player = Player._newInstance();
     player._player = processPlayer ?? Mpg123Player();

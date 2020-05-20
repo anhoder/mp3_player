@@ -6,8 +6,6 @@ import 'dart:io';
 import 'package:audio_player/exception.dart';
 
 part 'src/player.dart';
-part 'src/downloader.dart';
-part 'src/notifier.dart';
 part 'src/play_mode.dart';
 part 'src/interface/i_song.dart';
 part 'src/config.dart';

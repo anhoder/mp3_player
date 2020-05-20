@@ -10,5 +10,4 @@ class OtherInput implements IInput {
     _stdin.write(input);
     return this;
   }
-
 }

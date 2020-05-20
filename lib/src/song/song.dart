@@ -1,9 +1,6 @@
 part of audio_player;
 
-enum SongType {
-  LOCAL,
-  NETWORK
-}
+enum SongType { LOCAL, NETWORK }
 
 class Song implements ISong {
   @override
@@ -18,8 +15,8 @@ class Song implements ISong {
   String source;
   SongType type;
 
-
-  Song(this.source, this.type, {this.name, this.singer, this.album, this.duration});
+  Song(this.source, this.type,
+      {this.name, this.singer, this.album, this.duration});
 
   static Song fromString(String song) {
     var uri = Uri.parse(song);
