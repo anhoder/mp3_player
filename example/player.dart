@@ -8,7 +8,6 @@ void main(List<String> args) async {
   stdin.echoMode = false;
   stdin.lineMode = false;
 
-
   var player = await Player.run();
   var dir = dirname(Platform.script.path);
   dir = Platform.isWindows ? dir.substring(1) : dir;
@@ -18,7 +17,6 @@ void main(List<String> args) async {
     join(dir, 'sample_mp3/c.mp3')
   ];
   player.play(song);
-
 
   var playing = true;
   stdin.transform(Utf8Decoder()).listen((inputKey) {

@@ -1,12 +1,6 @@
 part of audio_player;
 
-enum PlayMode {
-  LIST_LOOP,   
-  SINGLE_LOOP, 
-  RANDOM,     
-  SEQUENTIAL,   
-  INTELLIGENT
-}
+enum PlayMode { LIST_LOOP, SINGLE_LOOP, RANDOM, SEQUENTIAL, INTELLIGENT }
 
 const PLAY_MODE_NAMES = <PlayMode, String>{
   PlayMode.LIST_LOOP: '列表循环',
