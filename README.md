@@ -1,22 +1,96 @@
-A library for Dart developers.
+# audio_player
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+A library for play mp3 file in ternimal, and it is based on mpg123.
 
 ## Usage
 
-A simple usage example:
+1. add dependency in `pubspec.yaml`:
 
-```dart
-import 'package:mpg123_player/mpg123_player.dart';
-
-main() {
-  var awesome = new Awesome();
-}
+```yaml
+dependencies:
+  audio_player: ^0.1.0
 ```
 
-## Features and bugs
+2. then, you can use it in your code:
 
-Please file feature requests and bugs at the [issue tracker][tracker].
+```dart
+import 'dart:convert';
+import 'dart:io';
+import 'package:path/path.dart';
 
-[tracker]: http://example.com/issues/replaceme
+import 'package:audio_player/audio_player.dart';
+
+void main(List<String> args) async {
+  stdin.echoMode = false;
+  stdin.lineMode = false;
+
+
+  var player = await Player.run();
+  var dir = dirname(Platform.script.path);
+  dir = Platform.isWindows ? dir.substring(1) : dir;
+  var song = [
+    join(dir, 'sample_mp3/a.mp3'),
+    join(dir, 'sample_mp3/b.mp3'),
+    join(dir, 'sample_mp3/c.mp3')
+  ];
+  player.play(song);
+
+
+  var playing = true;
+  stdin.transform(Utf8Decoder()).listen((inputKey) {
+    switch (inputKey) {
+      case ' ':
+        playing ? player.pause() : player.resume();
+        print(playing ? 'pause' : 'resume');
+        playing = !playing;
+        break;
+      case '[':
+        print('pre');
+        player.pre();
+        break;
+      case ']':
+        print('next');
+        player.next();
+        break;
+      case ',':
+        print('back');
+        player.back();
+        break;
+      case '.':
+        print('forward');
+        player.forward();
+        break;
+      case '-':
+        print('down volume');
+        player.downVolume();
+        break;
+      case '=':
+        print('up volume');
+        player.upVolumne();
+        break;
+      case 'q':
+        print('quit');
+        player.quit();
+        break;
+    }
+  });
+}
+
+```
+
+
+## Method
+
+```dart
+Player play([dynamic songs]);
+Player addSong(dynamic songs);
+Player pause();
+Player resume();
+Player next();
+Player pre();
+Player forward({int seconds = 5, int frame});
+Player back({int seconds = 5, int frame});
+Player upVolumne([int delta = 10]);
+Player downVolume([int delta = 10]);
+void quit();
+```

@@ -1,12 +1,19 @@
-part of mpg123_player;
+part of audio_player;
 
 class WinInput implements IInput {
-  static const String PIPE_NAME = '\\\\.\\pipe\\mpg123_player_pipe';
-  final File _pipe;
-
-  WinInput(): _pipe = File(PIPE_NAME);
+  static const String PIPE_NAME = r'\\.\pipe\mpg123_pipe';
+  File _pipe;
 
   @override
-  Future<File> _write(String input) => _pipe.writeAsString(input);
+  WinInput _write(String input) {
+    try {
+      _pipe ??= File(PIPE_NAME);
+      _pipe.writeAsStringSync(input, flush: true);
+      return this;
+    } catch (e) {
+      sleep(Duration(milliseconds: 200));
+      return _write(input);
+    }
+  } 
 
 }
