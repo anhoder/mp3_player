@@ -8,7 +8,7 @@ A library for play mp3 file in ternimal, and it is based on mpg123.
 
 ```yaml
 dependencies:
-  mp3_player: ^0.1.0
+  mp3_player: ^0.1.1
 ```
 
 2. then, you can use it in your code:
