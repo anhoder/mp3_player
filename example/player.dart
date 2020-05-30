@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart';
 
-import 'package:audio_player/audio_player.dart';
+import 'package:mp3_player/audio_player.dart';
 
 void main(List<String> args) async {
   stdin.echoMode = false;

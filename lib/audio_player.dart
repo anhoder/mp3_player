@@ -3,7 +3,7 @@ library audio_player;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:audio_player/exception.dart';
+import 'package:mp3_player/exception.dart';
 
 part 'src/player.dart';
 part 'src/play_mode.dart';

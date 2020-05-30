@@ -1,4 +1,4 @@
-# audio_player
+# mp3_player
 
 A library for play mp3 file in ternimal, and it is based on mpg123.
 
@@ -8,7 +8,7 @@ A library for play mp3 file in ternimal, and it is based on mpg123.
 
 ```yaml
 dependencies:
-  audio_player: ^0.1.0
+  mp3_player: ^0.1.1
 ```
 
 2. then, you can use it in your code:
@@ -18,7 +18,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path/path.dart';
 
-import 'package:audio_player/audio_player.dart';
+import 'package:mp3_player/audio_player.dart';
 
 void main(List<String> args) async {
   stdin.echoMode = false;
