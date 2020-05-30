@@ -94,7 +94,7 @@ class Mpg123Monitor<T> implements StreamConsumer<T> {
   @override
   Future addStream(Stream stream) {
     var completer = Completer();
-    stream.transform(Utf8Decoder()).transform(LineSplitter()).listen((data) {
+    stream.transform(Utf8Decoder(allowMalformed: true)).transform(LineSplitter()).listen((data) {
       _handle(data);
     },
         onError: completer.completeError,
