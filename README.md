@@ -1,5 +1,17 @@
 # mp3_player
 
+![GitHub repo size](https://img.shields.io/github/repo-size/AlanAlbert/mp3_player)
+![GitHub](https://img.shields.io/github/license/AlanAlbert/mp3_player)
+![Last Tag](https://badgen.net/github/tag/AlanAlbert/mp3_player)
+![GitHub last commit](https://badgen.net/github/last-commit/AlanAlbert/mp3_player)
+
+![Support](https://badgen.net/pub/dart-platform/mp3_player)
+![Pub Version](https://img.shields.io/pub/v/mp3_player)
+
+
+![GitHub stars](https://img.shields.io/github/stars/AlanAlbert/mp3_player?style=social)
+![GitHub forks](https://img.shields.io/github/forks/AlanAlbert/mp3_player?style=social)
+
 A library for play mp3 file in ternimal, and it is based on mpg123.
 
 ## Usage
