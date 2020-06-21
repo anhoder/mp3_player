@@ -117,7 +117,7 @@ class Mpg123Player implements IProcessPlayer {
   }
 
   @override
-  Mpg123Player _tuneSpeed(int speed, [bool offset = false]) {
+  Mpg123Player _tuneSpeed(double speed, [bool offset = false]) {
     var input = 'PITCH ';
     if (offset) {
       input = input + (speed >= 0 ? '+' : '') + speed.toString();

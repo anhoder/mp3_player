@@ -17,7 +17,7 @@ abstract class IProcessPlayer {
 
   dynamic _quit();
 
-  dynamic _tuneSpeed(int speed, [bool offset = false]);
+  dynamic _tuneSpeed(double speed, [bool offset = false]);
 
   dynamic _upVolume(int delta);
 

@@ -16,12 +16,7 @@ A library for play mp3 file in ternimal, and it is based on mpg123.
 
 ## Usage
 
-1. add dependency in `pubspec.yaml`:
-
-```yaml
-dependencies:
-  mp3_player: ^0.1.2
-```
+1. add dependency in `pubspec.yaml`.
 
 2. then, you can use it in your code:
 

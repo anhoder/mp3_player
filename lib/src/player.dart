@@ -28,6 +28,20 @@ class Player {
     return this;
   }
 
+  /// dont insert song into playlist
+  Player playWithoutList(dynamic songs) {
+    if (songs != null) {
+      if (songs is String) {
+        _player._play(Song.fromString(songs));
+      } else if (songs is ISong) {
+        _player._play(songs);
+      } else {
+        throw DataTypeInvalidException(songs.toString());
+      }
+    }
+    return this;
+  }
+
   Player addSong(dynamic songs) {
     if (songs != null) {
       if (songs is String) {
@@ -103,8 +117,35 @@ class Player {
     return this;
   }
 
+  Player setSpeed([double speed = 0]) {
+    _player._tuneSpeed(speed);
+    return this;
+  }
+
+  void stop() => _player._stop();
+
   void quit() {
     _player._quit();
     exit(0);
+  }
+
+  Player listenMusicInfo(void Function(Map<String, String> musicInfo) listener) {
+    _player._getMusicInfo().listen(listener);
+    return this;
+  }
+
+  Player listenProgress(void Function(Map<String, double> progress) listener) {
+    _player._getProgress().listen(listener);
+    return this;
+  }
+
+  Player listenStatus(void Function(int status) listener) {
+    _player._getStatus().listen(listener);
+    return this;
+  }
+
+  Player listenError(void Function(String error) listener) {
+    _player._getError().listen(listener);
+    return this;
   }
 }

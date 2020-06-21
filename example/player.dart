@@ -17,6 +17,10 @@ void main(List<String> args) async {
     join(dir, 'sample_mp3/c.mp3')
   ];
   player.play(song);
+  player.listenMusicInfo((musicInfo) => print(musicInfo));
+  // player.listenProgress((progress) => print(progress));
+  player.listenStatus((status) => print(status));
+  player.listenError((error) => print(error));
 
   var playing = true;
   stdin.transform(Utf8Decoder()).listen((inputKey) {
