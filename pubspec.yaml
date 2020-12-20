@@ -1,7 +1,7 @@
 name: mp3_player
 description: A library for play mp3 file in ternimal, and it is based on mpg123
-version: 0.2.0
-homepage: https://alanalbert.github.io
+version: 0.2.1
+homepage: https://anhoder.github.io
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
