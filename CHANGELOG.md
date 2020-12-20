@@ -13,3 +13,7 @@
 ## 0.2.0
 
 - update. player add some method to get player info
+
+## 0.2.1
+
+- update. README
