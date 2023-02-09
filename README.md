@@ -12,7 +12,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/anhoder/mp3_player?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/anhoder/mp3_player?style=social)
 
-A library for play mp3 file in ternimal, and it is based on mpg123.
+A library for play mp3 file in terminal, and it is based on mpg123.
 
 ## Usage
 
