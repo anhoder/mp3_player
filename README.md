@@ -1,3 +1,5 @@
+
+
 # mp3_player
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/anhoder/mp3_player)
@@ -17,6 +19,11 @@ A library for play mp3 file in terminal, and it is based on mpg123.
 ## Usage
 
 1. add dependency in `pubspec.yaml`.
+
+```yaml
+dependencies:
+  mp3_player: ^0.2.1
+```
 
 2. then, you can use it in your code:
 
